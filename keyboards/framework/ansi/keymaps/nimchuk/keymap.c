@@ -71,7 +71,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_COLEMAK_BASE] = LAYOUT(
         KC_ESC,  KC_MUTE, KC_VOLD, KC_VOLU, KC_MPRV, KC_MPLY, KC_MNXT, KC_BRID, KC_BRIU, KC_SCRN, KC_AIRP, KC_PSCR, KC_MSEL, KC_DEL,
         XXXXXXX, XXXXXXX, KC_7,    KC_8,    KC_9,    KC_0,    KC_5,    KC_6,    KC_1,    KC_2,    KC_3,    KC_4,    XXXXXXX, XXXXXXX,
-        CASEMDE, KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    QK_LEAD, KC_J,    KC_L,    KC_U,    KC_Y,    KC_EXLM, CASEMDEI,XXXXXXX,
+        CASEMDEI,KC_Q,    KC_W,    KC_F,    KC_P,    KC_B,    QK_LEAD, KC_J,    KC_L,    KC_U,    KC_Y,    KC_EXLM, CASEMDE, XXXXXXX,
         KC_UNDS, KC_A,    KC_R,    KC_S,    KC_T,    SYM_G,   XXXXXXX, SYM_M,   KC_N,    KC_E,    KC_I,    KC_O,             KC_MINS,
         SFT_Z,            GUI_X,   ALT_C,   CTL_D,   KC_V,    XXXXXXX, XXXXXXX, KC_K,    CTL_H,   ALT_CM,  GUI_DOT,          SFT_QT,
         XXXXXXX, MO(_FN), KC_TAB,  SNV_SPC,          NUM_DEL,                   NAV_BS,  SFT_ENT, KC_ESC,  XXXXXXX, XXXXXXX, XXXXXXX
