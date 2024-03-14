@@ -14,6 +14,7 @@ enum custom_keycodes {
     RGT_PIP,                    // Quick |>
     CASEMDE,                    // Choose different case modes dependent on mods
     CASEMDEI,                   // CASEMDE with inverted shift
+    MAC_TST,
 };
 
 enum _layers {
@@ -251,7 +252,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
         _______, _______, _______, _______, _______, _______, _______, _______, _______, G(KC_L), _______, _______, _______, _______,
         _______, _______, _______, A_F4,    _______, _______, _______, C_HOME,  KC_HOME, KC_UP,   KC_END,  C_END,   _______, _______,
-        _______, _______, _______, _______, _______, _______, _______, C_LFT,   KC_LEFT, KC_DOWN, KC_RGHT, C_RGT,            G_GRV,
+        _______, _______, _______, MAC_TST, _______, _______, _______, C_LFT,   KC_LEFT, KC_DOWN, KC_RGHT, C_RGT,            G_GRV,
         SFT_MTE,          GUI_PRV, ALT_PLY, CTL_NXT, _______, _______, _______, _______, CTL_PGU, ALT_C_A, GUI_PGD,          SFT_C_Z,
         _______, _______, _______, _______,          _______,                   _______, _______, _______, _______, _______, _______
     ),
@@ -331,6 +332,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             break;
 
+        // Kanata integration macros
+        case MAC_TST:
+            if (record->event.pressed) {
+                SEND_STRING(SS_TAP(X_F13) "what");
+                return false;
+            }
 
         // Tap/hold user-processed
 
@@ -545,6 +552,15 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
             // keycode & 0xFF would be fine.
             unregister_code16((IS_RETRO(keycode)) ? keycode & 0xFF : keycode);
     }
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (layer_state_cmp(state, _QWERTY_BASE)) {
+        autoshift_disable();
+    } else {
+        autoshift_enable();
+    }
+    return state;
 }
 
 void leader_end_user(void) {
