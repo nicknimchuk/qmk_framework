@@ -259,6 +259,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 };
 
+// Combo definitions
+const uint16_t PROGMEM repeat_combo1[] = {KC_W, KC_F, COMBO_END};
+const uint16_t PROGMEM repeat_combo2[] = {KC_U, KC_Y, COMBO_END};
+const uint16_t PROGMEM altrepeat_combo1[] = {KC_P, KC_F, COMBO_END};
+const uint16_t PROGMEM altrepeat_combo2[] = {KC_U, KC_L, COMBO_END};
+
+combo_t key_combos[] = {
+    COMBO(repeat_combo1, QK_REP),
+    COMBO(repeat_combo2, QK_REP),
+    COMBO(altrepeat_combo1, QK_AREP),
+    COMBO(altrepeat_combo2, QK_AREP),
+};
+
 
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -277,7 +290,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 }
                 if (layer_state_is(_FM)) {
                     set_single_persistent_default_layer(_COLEMAK_BASE);
-                }
             }
             return false;
             break;
@@ -554,15 +566,6 @@ void autoshift_release_user(uint16_t keycode, bool shifted, keyrecord_t *record)
     }
 }
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    if (layer_state_cmp(state, _QWERTY_BASE)) {
-        autoshift_disable();
-    } else {
-        autoshift_enable();
-    }
-    return state;
-}
-
 /* ANSI/US/US RGB keyboard key location to LED Index
  *
  *         ┌─────┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬────┐
@@ -582,16 +585,22 @@ layer_state_t layer_state_set_user(layer_state_t state) {
  *         └────┴───┴───┴───┴───────────────────┴───┴───┴────┴───┴────┘
 */
 
-bool rgb_matrix_indicators_user(void) {
-  if (rgb_matrix_config.enable == 1) {
-    if (layer_state_cmp(layer_state, _QWERTY_BASE)) {
+layer_state_t layer_state_set_user(layer_state_t state) {
+    if (layer_state_cmp(state, _QWERTY_BASE)) {
+        autoshift_disable();
+
+        // Highlight F and J keys (normal home index keys)
         rgb_matrix_set_color(43, 64, 64, 0);
         rgb_matrix_set_color(49, 64, 64, 0);
     } else {
+        autoshift_enable();
+
+        // Highlight F and K keys (Colemak T and N with right hand shifted)
         rgb_matrix_set_color(43, 64, 64, 64);
         rgb_matrix_set_color(50, 64, 64, 64);
     }
 
+    // Highlight function keys
     if (layer_state_cmp(layer_state, _FM)) {
         rgb_matrix_set_color(21, 128, 128, 128);
         rgb_matrix_set_color(19, 128, 128, 128);
@@ -608,8 +617,17 @@ bool rgb_matrix_indicators_user(void) {
         rgb_matrix_set_color(70, 128, 128, 128);
     }
 
-  }
-  return true;
+    return state;
+}
+
+
+bool combo_should_trigger(uint16_t combo_index, combo_t *combo, uint16_t keycode, keyrecord_t *record) {
+    // Don't use combos on QWERTY layer
+    if (layer_state_is(_QWERTY_BASE)) {
+        return false;
+    }
+
+    return true;
 }
 
 void leader_end_user(void) {
