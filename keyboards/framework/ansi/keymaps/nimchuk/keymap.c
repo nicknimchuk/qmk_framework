@@ -40,9 +40,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      *         ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬────┤
      * 14 keys │CS_MD│ Q │ W │ F │ P │ B │LDR│ J │ L │ U │ Y │! ?│c_m│ XX │
      *         ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴────┤
+     *         │      │   │   │   │   │Sym│   │Sym│   │   │   │   │       │
      * 13 keys │  _   │ A │ R │ S │ T │ G │ XX│ M │ N │ E │ I │ O │   -   │
      *         ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───────┤
-     * 12 keys │   Z    │ X │ C │ D │ V │ XX│ XX│ K │ H │, /│. \│  '  "   │
+     *         │   Sft  │Gui│Alt│Ctl│   │   │   │   │Ctl│Alt│Gui│  Sft    │
+     * 12 keys │    Z   │ X │ C │ D │ V │ XX│ XX│ K │ H │, /│. \│  '  "   │
      *         ├────┬───┼───┼───┼───┴───┴───┴───┴───┼───┼───┼───┴┬───┬────┤
      *         │    │   │   │SNv│       Num         │Nav│Sft│    │XX │    │
      * 11 keys │ XX │FN │Tab│Spc│       Del         │Bsp│Ent│ Esc├───┤ XX │
