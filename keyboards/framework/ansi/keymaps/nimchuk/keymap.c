@@ -563,6 +563,55 @@ layer_state_t layer_state_set_user(layer_state_t state) {
     return state;
 }
 
+/* ANSI/US/US RGB keyboard key location to LED Index
+ *
+ *         ┌─────┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬────┐
+ * row 1   │ 25  │ 21│ 19│ 18│ 20│ 22│ 24│ 26│ 67│ 74│68│66/71│70│72/73│
+ *         ├───┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴────┤
+ * row 2   │ 16│ 15│ 13│ 12│ 11│ 9 | 14│ 10│ 17│ 69│ 61│ 63│ 62│  65  │
+ *         ├───┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬────┤
+ * row 3   │  1  │ 5 │ 3 │ 2 │ 4 │ 7 │ 8 │ 6 │ 58│ 59│ 60│ 57│ 54│ 55 │
+ *         ├─────┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴┬──┴────┤
+ * row 4   │  44  │ 36│ 41│ 37│ 43│ 39│ 40│ 49│ 50│ 51│ 48│ 52│  56   │
+ *         ├──────┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴─┬─┴───────┤
+ * row 5   │   32   │ 27│ 29│ 31│ 33│ 35│ 76│ 77│ 78│ 75│ 79│    92   │
+ *         ├────┬───┼───┼───┼───┴───┴───┴───┴───┼───┼───┼───┴┬───┬────┤
+ *         │    │   │   │   │                   │   │   │    │ 81│    │
+ * row 6   │ 34 │ 93│ 46│ 47│        94         │ 84│ 88│ 89 ├───┤ 91 │
+ *         │    │   │   │   │                   │   │   │    │ 90│    │
+ *         └────┴───┴───┴───┴───────────────────┴───┴───┴────┴───┴────┘
+*/
+
+bool rgb_matrix_indicators_user(void) {
+  if (rgb_matrix_config.enable == 1) {
+    if (layer_state_cmp(layer_state, _QWERTY_BASE)) {
+        rgb_matrix_set_color(43, 64, 64, 0);
+        rgb_matrix_set_color(49, 64, 64, 0);
+    } else {
+        rgb_matrix_set_color(43, 64, 64, 64);
+        rgb_matrix_set_color(50, 64, 64, 64);
+    }
+
+    if (layer_state_cmp(layer_state, _FM)) {
+        rgb_matrix_set_color(21, 128, 128, 128);
+        rgb_matrix_set_color(19, 128, 128, 128);
+        rgb_matrix_set_color(18, 128, 128, 128);
+        rgb_matrix_set_color(20, 128, 128, 128);
+        rgb_matrix_set_color(22, 128, 128, 128);
+        rgb_matrix_set_color(24, 128, 128, 128);
+        rgb_matrix_set_color(26, 128, 128, 128);
+        rgb_matrix_set_color(67, 128, 128, 128);
+        rgb_matrix_set_color(74, 128, 128, 128);
+        rgb_matrix_set_color(68, 128, 128, 128);
+        rgb_matrix_set_color(66, 128, 128, 128);
+        rgb_matrix_set_color(71, 128, 128, 128);
+        rgb_matrix_set_color(70, 128, 128, 128);
+    }
+
+  }
+  return true;
+}
+
 void leader_end_user(void) {
     if (leader_sequence_one_key(KC_W)) {
         SEND_STRING(SECRET_WMAIL);
